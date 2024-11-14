@@ -1,0 +1,28 @@
+--- 
+#title: "Palmer Penguins"
+#author: "Cobblepot Analytics"
+format: 
+  dashboard:
+    #logo: images/penguins.png
+    nav-buttons: [linkedin, twitter, github]
+---
+
+What if I write something here
+
+## Row {height=70%}
+
+
+```{r}
+plot(cars)
+```
+
+## Row {height=30%}
+
+```{r}
+plot(cars)
+```
+
+
+```{r}
+plot(cars)
+```
