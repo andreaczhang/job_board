@@ -9,14 +9,54 @@ format:
 
 What if I write something here
 
-## Row {height=70%}
+## Row {height=30%}
 
 
 ```{r}
-plot(cars)
+#| content: valuebox
+#| title: "total"
+
+list(icon = 'files',
+  color = 'primary', 
+     value = 23)
+
 ```
 
-## Row {height=30%}
+
+```{r}
+#| content: valuebox
+#| title: "total interviews"
+
+list(icon = 'files',
+  color = 'secondary', 
+     value = 23)
+
+```
+
+```{r}
+#| content: valuebox
+#| title: "final round interview"
+
+list(icon = 'files',
+  color = 'success', 
+     value = 3)
+
+```
+
+```{r}
+#| content: valuebox
+#| title: "rate of final round"
+
+list(icon = 'files',
+  color = 'info', 
+     value = 0.2)
+
+```
+
+
+
+
+## Row {height=70%}
 
 ```{r}
 plot(cars)
