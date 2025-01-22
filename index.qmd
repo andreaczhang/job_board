@@ -4,65 +4,98 @@
 format: 
   dashboard:
     #logo: images/penguins.png
-    nav-buttons: [linkedin, twitter, github]
+    nav-buttons: [github]
 ---
 
-What if I write something here
 
-## Row {height=30%}
+## Row {height=20%}
 
 
 ```{r}
 #| content: valuebox
-#| title: "total"
+#| title: "Applied"
+
+n_apply <- readRDS('data_public/n_apply.rds')
 
 list(icon = 'files',
   color = 'primary', 
-     value = 23)
+     value = n_apply)
 
 ```
 
 
 ```{r}
 #| content: valuebox
-#| title: "total interviews"
+#| title: "Ghosted"
+
+n_no_response <- readRDS('data_public/n_no_response.rds')
+
 
 list(icon = 'files',
   color = 'secondary', 
-     value = 23)
-
+     value = n_no_response)
 ```
+
+
+
 
 ```{r}
 #| content: valuebox
-#| title: "final round interview"
+#| title: "Final round interview"
+
+
+n_finalround <- readRDS('data_public/n_finalround.rds')
 
 list(icon = 'files',
   color = 'success', 
-     value = 3)
-
+     value = n_finalround)
 ```
+
+
 
 ```{r}
 #| content: valuebox
-#| title: "rate of final round"
+#| title: "Final round rate"
+
+perc_final <- readRDS('data_public/perc_final.rds')
 
 list(icon = 'files',
   color = 'info', 
-     value = 0.2)
+     value = perc_final)
 
 ```
 
 
 
 
-## Row {height=70%}
+## Row {height=80%}
 
 ```{r}
-plot(cars)
+library(ggplot2)
+
+n_weekly_bysec <- readRDS(file = 'data_public/n_weekly_bysec.rds')
+
+p <- ggplot(n_weekly_bysec, 
+            aes(x = monday_date, y = N, fill = sector))
+p <- p + geom_bar(stat = 'identity')
+p <- p + scale_x_date(date_breaks = 'week',
+                      date_labels = '%Y-%W', 
+                      name = 'year-week')
+p <- p + scale_y_continuous(expand = c(0, 0), limits = c(0, 12))
+p <- p + scale_fill_brewer(palette = 'Set1')
+p <- p + theme_classic()
+p <- p + theme(
+  axis.text = element_text(size = 12),
+  axis.title = element_text(size = 12), 
+  plot.title = element_text(size = 15), 
+  axis.text.x = element_text(angle = 90, vjust = 0.4, hjust = 0.4), 
+  axis.title.x = element_blank()
+)
+p <- p + labs(
+  x = 'Year - Week', 
+  y = 'Number of applications', 
+  title = 'Weekly application by sector'
+)
+p
 ```
 
-
-```{r}
-plot(cars)
-```

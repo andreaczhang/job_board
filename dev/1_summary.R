@@ -21,32 +21,24 @@ js[!is.na(final_outcome)]
 
 
 
-
+# 1. n_apply ----
 n_apply <- nrow(js)
 n_apply
 
+saveRDS(n_apply, file = 'data_public/n_apply.rds')
+# nn <- readRDS('test.rds')
+# nn
+
 # interested in the following:
 
-# any response (incl. auto)
-n_any_response <- js[response == 'yes'] |> nrow()
-round(n_any_response / n_apply, 3)
 
 
 
 
 
-# OVERALL SUMMARY ----
-# success rate of having any interview ----
-
-js[, interview_any]
-n_any_interview <- js[interview_any == 'yes'] |> nrow()
-round(n_any_interview / n_apply, 3)
 
 
-
-
-
-# final round interview ----
+# 2. final round interview ----
 
 # success rate of having any final rounds
 # this is the interview that's right before offer
@@ -55,9 +47,37 @@ round(n_any_interview / n_apply, 3)
 
 n_finalround_interview <- js[interview_finalround == 'yes'] |> nrow()
 
-
 round(n_finalround_interview / n_any_interview, 3)
 
+n_finalround_interview
+saveRDS(n_finalround_interview, file = 'data_public/n_finalround.rds')
+
+
+
+# 3. any response (ghosts) ----
+# any response (incl. auto)
+n_any_response <- js[response == 'yes'] |> nrow()
+saveRDS(n_any_response, file = 'data_public/n_any_response.rds')
+
+round(n_any_response / n_apply, 3)
+
+# no response
+n_no_response <- js[response != 'yes'] |> nrow()
+n_no_response
+
+saveRDS(n_no_response, file = 'data_public/n_no_response.rds')
+
+
+
+# 4. success rate of having any interview ----
+
+js[, interview_any]
+n_any_interview <- js[interview_any == 'yes'] |> nrow()
+round(n_any_interview / n_apply, 3)
+
+perc_final <- n_finalround_interview/n_any_interview
+
+saveRDS(perc_final, file = 'data_public/perc_final.rds')
 
 
 
@@ -83,7 +103,7 @@ n_weeks <- function(year){
 # sapply(2019:2026, function(x){n_weeks(x)})
 
 lubridate::today()
-lubridate::isoweek()
+# lubridate::isoweek()
 
 date_start <- min(js$application_date)
 date_end <- today()
@@ -107,8 +127,8 @@ week_sequence <- data.table(
 
 # need to attach the monday dates on the orignal data too 
 
-lubridate::isoweek(js$application_date)
-lubridate::isoyear(js$application_date)
+# lubridate::isoweek(js$application_date)
+# lubridate::isoyear(js$application_date)
 
 jsc <- copy(js)
 jsc <- jsc[, .(sector, application_date)]
@@ -174,6 +194,10 @@ p
 
 n_weekly_bysec <- jsc[, .N, by = .(monday_date, sector)]
 
+
+saveRDS(n_weekly_bysec, file = 'data_public/n_weekly_bysec.rds')
+
+
 p <- ggplot(n_weekly_bysec, 
             aes(x = monday_date, y = N, fill = sector))
 p <- p + geom_bar(stat = 'identity')
@@ -187,7 +211,7 @@ p <- p + theme(
   axis.text = element_text(size = 12),
   axis.title = element_text(size = 12), 
   plot.title = element_text(size = 15), 
-  axis.text.x = element_text(angle = 45, vjust = 0.4, hjust = 0.4), 
+  axis.text.x = element_text(angle = 90, vjust = 0.4, hjust = 0.4), 
   axis.title.x = element_blank()
 )
 p <- p + labs(
