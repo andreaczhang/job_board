@@ -55,9 +55,10 @@ list(icon = 'files',
 
 ```{r}
 #| content: valuebox
-#| title: "Final round rate"
+#| title: "Final round rate (if interview)"
 
 perc_final <- readRDS('data_public/perc_final.rds')
+perc_final <- round(perc_final, 2)
 
 list(icon = 'files',
   color = 'info', 
