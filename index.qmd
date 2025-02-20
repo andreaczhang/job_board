@@ -37,6 +37,17 @@ list(icon = 'files',
 ```
 
 
+```{r}
+#| content: valuebox
+#| title: "Any interview"
+
+
+n_any <- readRDS('data_public/n_anyinterview.rds')
+
+list(icon = 'files',
+  color = '#ebd1f0', 
+     value = n_any)
+```
 
 
 ```{r}

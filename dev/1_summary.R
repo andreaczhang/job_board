@@ -44,6 +44,8 @@ saveRDS(n_apply, file = 'data_public/n_apply.rds')
 # this is the interview that's right before offer
 
 # over all, and over those with any interview 
+n_any_interview
+saveRDS(n_any_interview, file = 'data_public/n_anyinterview.rds')
 
 n_finalround_interview <- js[interview_finalround == 'yes'] |> nrow()
 
